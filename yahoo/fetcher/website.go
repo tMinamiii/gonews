@@ -12,23 +12,23 @@ import (
 	"github.com/pkg/errors"
 )
 
-type WebsiteFetcher interface {
+type HTMLFetcher interface {
 	Fetch(ctx context.Context, URL string) (*goquery.Document, error)
 }
 
-type YahooNewsWebsiteFetcher struct {
+type WebsiteFetcher struct {
 	Client  *http.Client
 	Timeout time.Duration
 }
 
-func NewYahooNewsWebsiteFetcher() WebsiteFetcher {
-	return &YahooNewsWebsiteFetcher{
+func NewWebsiteFetcher() HTMLFetcher {
+	return &WebsiteFetcher{
 		Client:  http.DefaultClient,
 		Timeout: 1 * time.Second,
 	}
 }
 
-func (y *YahooNewsWebsiteFetcher) Fetch(ctx context.Context, URL string) (*goquery.Document, error) {
+func (y *WebsiteFetcher) Fetch(ctx context.Context, URL string) (*goquery.Document, error) {
 	req, err := http.NewRequest(http.MethodGet, URL, strings.NewReader(""))
 	if err != nil {
 		return nil, errors.WithStack(err)
@@ -48,7 +48,7 @@ func (y *YahooNewsWebsiteFetcher) Fetch(ctx context.Context, URL string) (*goque
 	return doc, nil
 }
 
-func (y *YahooNewsWebsiteFetcher) doRequest(ctx context.Context, req *http.Request) (*goquery.Document, error) {
+func (y *WebsiteFetcher) doRequest(ctx context.Context, req *http.Request) (*goquery.Document, error) {
 	reqCtx, cancel := context.WithTimeout(ctx, y.Timeout)
 	defer cancel()
 
