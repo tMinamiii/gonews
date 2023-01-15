@@ -1,4 +1,4 @@
-package yahoo
+package model
 
 import (
 	"testing"
@@ -8,7 +8,7 @@ import (
 )
 
 func TestYahooNewsItem_PubDate(t *testing.T) {
-	y := &YahooNewsItem{
+	y := &YahooNewsRSSItem{
 		PubDateStr: "Sun, 15 Jan 2023 08:39:52 GMT",
 	}
 	got, err := y.PubDate()
