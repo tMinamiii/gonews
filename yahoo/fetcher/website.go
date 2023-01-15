@@ -12,7 +12,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-type HTMLFetcher interface {
+type HTMLDocumentFetcher interface {
 	Fetch(ctx context.Context, URL string) (*goquery.Document, error)
 }
 
@@ -21,7 +21,7 @@ type WebsiteFetcher struct {
 	Timeout time.Duration
 }
 
-func NewWebsiteFetcher() HTMLFetcher {
+func NewWebsiteFetcher() HTMLDocumentFetcher {
 	return &WebsiteFetcher{
 		Client:  http.DefaultClient,
 		Timeout: 1 * time.Second,
